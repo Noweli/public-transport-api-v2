@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using PublicTransportApi.Data;
 using PublicTransportApi.Data.Models;
 using PublicTransportApi.Migrations;
@@ -57,9 +58,37 @@ public class LineService : ILineService
         };
     }
 
-    public Task<Result<Line>> GetLine(int id)
+    public async Task<Result<Line>> GetLine(int id)
     {
-        throw new NotImplementedException();
+        Line? lineFromDb;
+        
+        try
+        {
+            lineFromDb = await _dbContext.Lines.FirstOrDefaultAsync(item => item.Id.Equals(id));
+        }
+        catch (Exception)
+        {
+            return new Result<Line>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+
+        if (lineFromDb is null)
+        {
+            return new Result<Line>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Line_LineCouldNotBeFound
+            };
+        }
+
+        return new Result<Line>
+        {
+            IsSuccess = true,
+            Data = lineFromDb
+        };
     }
 
     public Task<Result<Line>> GetLineByIdentifier(string identifier)

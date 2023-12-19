@@ -27,4 +27,7 @@
     <data name="Generic_ExceptionOccured" xml:space="preserve">
         <value>Could not finish action. Exception occured.</value>
     </data>
+    <data name="Line_LineCouldNotBeFound" xml:space="preserve">
+        <value>Specified line could not be found in database.</value>
+    </data>
 </root>

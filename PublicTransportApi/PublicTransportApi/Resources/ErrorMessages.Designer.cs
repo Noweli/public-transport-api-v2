@@ -62,5 +62,11 @@ namespace PublicTransportApi.Resources {
                 return ResourceManager.GetString("Generic_ExceptionOccured", resourceCulture);
             }
         }
+        
+        internal static string Line_LineCouldNotBeFound {
+            get {
+                return ResourceManager.GetString("Line_LineCouldNotBeFound", resourceCulture);
+            }
+        }
     }
 }
