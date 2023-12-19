@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using PublicTransportApi.Data;
@@ -58,52 +59,43 @@ public class LineService : ILineService
         };
     }
 
-    public async Task<Result<Line>> GetLine(int id)
+    public Task<Result<Line>> GetLine(int id)
     {
-        Line? lineFromDb;
-        
-        try
-        {
-            lineFromDb = await _dbContext.Lines.FirstOrDefaultAsync(item => item.Id.Equals(id));
-        }
-        catch (Exception)
-        {
-            return new Result<Line>
-            {
-                IsSuccess = false,
-                Message = ErrorMessages.Generic_ExceptionOccured
-            };
-        }
-
-        if (lineFromDb is null)
-        {
-            return new Result<Line>
-            {
-                IsSuccess = false,
-                Message = ErrorMessages.Line_LineCouldNotBeFound
-            };
-        }
-
-        return new Result<Line>
-        {
-            IsSuccess = true,
-            Data = lineFromDb
-        };
+        return GenericGetLine(item => item.Id.Equals(id));
     }
 
     public Task<Result<Line>> GetLineByIdentifier(string identifier)
     {
-        throw new NotImplementedException();
+        return GenericGetLine(item => item.Identifier != null && item.Identifier.ToLower().Equals(identifier.ToLower()));
     }
 
     public Task<Result<Line>> GetLineByName(string name)
     {
-        throw new NotImplementedException();
+        return GenericGetLine(item => item.Name != null && item.Name.ToLower().Equals(name.ToLower()));
     }
 
-    public Task<Result<List<Line>>> GetAllLines()
+    public async Task<Result<List<Line>>> GetAllLines()
     {
-        throw new NotImplementedException();
+        List<Line> linesFromDb;
+        
+        try
+        {
+            linesFromDb = await _dbContext.Lines.ToListAsync();
+        }
+        catch (Exception)
+        {
+            return new Result<List<Line>>
+            {
+                IsSuccess = true,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+
+        return new Result<List<Line>>
+        {
+            IsSuccess = true,
+            Data = linesFromDb
+        };
     }
 
     public Task<Result> DeleteLine(string id)
@@ -124,5 +116,38 @@ public class LineService : ILineService
     public Task<Result<Line>> UpdateLine(int id, string identifier, string name)
     {
         throw new NotImplementedException();
+    }
+
+    private async Task<Result<Line>> GenericGetLine(Expression<Func<Line, bool>> predicate)
+    {
+        Line? lineFromDb;
+        
+        try
+        {
+            lineFromDb = await _dbContext.Lines.FirstOrDefaultAsync(predicate);
+        }
+        catch (Exception)
+        {
+            return new Result<Line>
+            {
+                IsSuccess = true,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+        
+        if(lineFromDb is null)
+        {
+            return new Result<Line>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Line_LineCouldNotBeFound
+            };
+        }
+
+        return new Result<Line>
+        {
+            IsSuccess = true,
+            Data = lineFromDb
+        };
     }
 }
