@@ -1,6 +1,6 @@
 using FluentValidation.Results;
 
-namespace PublicTransportApi.Migrations;
+namespace PublicTransportApi.Helpers.Extensions;
 
 public static class StringExtensions
 {

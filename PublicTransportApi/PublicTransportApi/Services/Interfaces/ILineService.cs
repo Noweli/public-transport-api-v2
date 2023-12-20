@@ -9,7 +9,7 @@ public interface ILineService
     Task<Result<Line>> GetLineByIdentifier(string identifier);
     Task<Result<Line>> GetLineByName(string name);
     Task<Result<List<Line>>> GetAllLines();
-    Task<Result> DeleteLine(string id);
+    Task<Result> DeleteLine(int id);
     Task<Result> DeleteLineByIdentifier(string identifier);
     Task<Result> DeleteLineByName(string name);
     Task<Result<Line>> UpdateLine(int id, string identifier, string name);
