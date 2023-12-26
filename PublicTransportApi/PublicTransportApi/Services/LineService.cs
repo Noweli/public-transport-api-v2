@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using PublicTransportApi.Data;
 using PublicTransportApi.Data.Models;
 using PublicTransportApi.Helpers.Extensions;
-using PublicTransportApi.Migrations;
 using PublicTransportApi.Resources;
 using PublicTransportApi.Services.Interfaces;
 

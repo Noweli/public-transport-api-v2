@@ -24,13 +24,7 @@ namespace PublicTransportApi.Tests.TestHelpers
 
         public DbContextHelper WithTestLineEntries()
         {
-            if (_dbContext?.Lines.Any() ?? false)
-            {
-                return this;
-            }
-            
             _ = _dbContext!.Lines.Add(GenerateLine());
-
             _ = _dbContext.SaveChanges();
 
             return this;
@@ -49,7 +43,7 @@ namespace PublicTransportApi.Tests.TestHelpers
         private void PrepareDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "Test_Database")
+                .UseInMemoryDatabase(databaseName: $"Test_Database_{Guid.NewGuid().ToString()}")
                 .Options;
                 
             _dbContext = new ApplicationDbContext(options);
