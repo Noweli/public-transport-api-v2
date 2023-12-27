@@ -5,6 +5,9 @@
 
 .idea/
 .DS_Store
+*.drawio.bkp
+*.drawio.dtmp
+
 
 # User-specific files
 *.rsuser

@@ -12,7 +12,7 @@ namespace PublicTransportApi.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class LineController : ControllerBase
 {
-    private ILineService _lineService;
+    private readonly ILineService _lineService;
 
     public LineController(ILineService lineService)
     {
