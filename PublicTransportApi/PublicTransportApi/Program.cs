@@ -32,6 +32,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("datasource=database.sqlite"));
 builder.Services.AddScoped<ILineService, LineService>();
 builder.Services.AddScoped<IScheduleEntryService, ScheduleService>();
+builder.Services.AddScoped<IStopPointService, StopPointService>();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
