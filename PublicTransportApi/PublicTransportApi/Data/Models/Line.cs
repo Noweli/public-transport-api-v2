@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PublicTransportApi.Data.Models;
 
 public class Line
 {
     public int Id { get; init; }
-    public string? Identifier { get; set; }
-    public string? Name { get; set; }
+    [MaxLength(30)] public string? Identifier { get; set; }
+    [MaxLength(120)] public string? Name { get; set; }
+    public ICollection<StopPointLineCorrelation> SPLCorrelations { get; set; } = new List<StopPointLineCorrelation>();
 }
