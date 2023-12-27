@@ -7,8 +7,9 @@ using PublicTransportApi.Services.Interfaces;
 
 namespace PublicTransportApi.Controllers;
 
-[ApiVersion(1.0)]
 [ApiController]
+[ApiVersion(1.0)]
+[ApiExplorerSettings(GroupName = "V1")]
 [Route("api/v{version:apiVersion}/[controller]")]
 public class LineController : ControllerBase
 {

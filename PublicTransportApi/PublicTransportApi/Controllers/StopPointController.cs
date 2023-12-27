@@ -11,19 +11,19 @@ namespace PublicTransportApi.Controllers;
 [ApiVersion(1.0)]
 [ApiExplorerSettings(GroupName = "V1")]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class ScheduleController : ControllerBase
+public class StopPointController : ControllerBase
 {
-    private readonly IScheduleEntryService _scheduleService;
+    private readonly IStopPointService _stopPointService;
 
-    public ScheduleController(IScheduleEntryService scheduleService)
+    public StopPointController(IStopPointService stopPointService)
     {
-        _scheduleService = scheduleService;
+        _stopPointService = stopPointService;
     }
 
     [HttpGet]
-    public async Task<ActionResult<Result<List<ScheduleEntry>>>> GetAllSchedules()
+    public async Task<ActionResult<Result<List<StopPoint>>>> GetAllStopPoints()
     {
-        var serviceResult = await _scheduleService.GetAllSchedules();
+        var serviceResult = await _stopPointService.GetAllStopPoints();
 
         if (!serviceResult.IsSuccess)
         {
@@ -34,9 +34,9 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Result<ScheduleEntry>>> AddSchedule([FromBody] ScheduleEntryDTO scheduleEntryDTO)
+    public async Task<ActionResult<Result<StopPoint>>> AddStopPoint([FromBody] StopPointDTO stopPointDTO)
     {
-        var serviceResult = await _scheduleService.AddSchedule(scheduleEntryDTO);
+        var serviceResult = await _stopPointService.AddStopPoint(stopPointDTO);
 
         if (!serviceResult.IsSuccess)
         {
@@ -47,9 +47,9 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<ActionResult<Result<ScheduleEntry>>> RemoveSchedule([FromQuery] int id)
+    public async Task<ActionResult<Result<List<StopPoint>>>> DeleteStopPoint([FromQuery] int id)
     {
-        var serviceResult = await _scheduleService.RemoveSchedule(id);
+        var serviceResult = await _stopPointService.DeleteStopPoint(id);
 
         if (!serviceResult.IsSuccess)
         {
@@ -60,10 +60,10 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<ActionResult<Result<ScheduleEntry>>> UpdateSchedule([FromQuery] int id,
-        [FromBody] ScheduleEntryDTO scheduleEntryDTO)
+    public async Task<ActionResult<Result<List<StopPoint>>>> UpdateStopPoint([FromQuery] int id,
+        [FromBody] StopPointDTO stopPointDTO)
     {
-        var serviceResult = await _scheduleService.UpdateSchedule(id, scheduleEntryDTO);
+        var serviceResult = await _stopPointService.UpdateStopPoint(id, stopPointDTO);
 
         if (!serviceResult.IsSuccess)
         {
