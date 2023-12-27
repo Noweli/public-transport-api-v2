@@ -110,5 +110,11 @@ namespace PublicTransportApi.Resources {
                 return ResourceManager.GetString("StopPoint_LatLongEmpty", resourceCulture);
             }
         }
+        
+        internal static string StopPoint_NotFound {
+            get {
+                return ResourceManager.GetString("StopPoint_NotFound", resourceCulture);
+            }
+        }
     }
 }

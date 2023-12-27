@@ -51,4 +51,7 @@
     <data name="StopPoint_LatLongEmpty" xml:space="preserve">
         <value>If street name is not provided, lat and long should not be empty.</value>
     </data>
+    <data name="StopPoint_NotFound" xml:space="preserve">
+        <value>Could not find specified stop point.</value>
+    </data>
 </root>
