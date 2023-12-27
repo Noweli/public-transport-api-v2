@@ -31,7 +31,7 @@
         <value>Specified line could not be found in database.</value>
     </data>
     <data name="Schedule_RecurringDaysEmpty" xml:space="preserve">
-        <value>Recurring days cannot be empty if recurring is selected.</value>
+        <value>Recurring days cannot be empty if recurring is selected. Recurring dats can only contain digits and commas. Sunday = 0, Monday = 1 ... Saturday = 6.</value>
     </data>
     <data name="Schedule_DateTimeEmpty" xml:space="preserve">
         <value>Date and time cannot be empty for schedule.</value>
