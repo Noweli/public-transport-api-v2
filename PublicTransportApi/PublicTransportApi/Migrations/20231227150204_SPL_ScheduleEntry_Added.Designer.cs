@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PublicTransportApi.Data;
 
@@ -10,9 +11,11 @@ using PublicTransportApi.Data;
 namespace PublicTransportApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231227150204_SPL_ScheduleEntry_Added")]
+    partial class SPL_ScheduleEntry_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -58,7 +61,7 @@ namespace PublicTransportApi.Migrations
 
                     b.HasIndex("SPLCorrelationId");
 
-                    b.ToTable("ScheduleEntries");
+                    b.ToTable("ScheduleEntry");
                 });
 
             modelBuilder.Entity("PublicTransportApi.Data.Models.StopPoint", b =>
@@ -106,7 +109,7 @@ namespace PublicTransportApi.Migrations
 
                     b.HasIndex("StopPointId");
 
-                    b.ToTable("StopPointLineCorrelations");
+                    b.ToTable("StopPointLineCorrelation");
                 });
 
             modelBuilder.Entity("PublicTransportApi.Data.Models.ScheduleEntry", b =>
