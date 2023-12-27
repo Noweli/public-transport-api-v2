@@ -7,5 +7,5 @@ public class Line
     public int Id { get; init; }
     [MaxLength(30)] public string? Identifier { get; set; }
     [MaxLength(120)] public string? Name { get; set; }
-    public ICollection<StopPointLineCorrelation> SPLCorrelations { get; set; } = new List<StopPointLineCorrelation>();
+    public ICollection<StopPointLineCorrelation> SPLCorrelations { get; } = new List<StopPointLineCorrelation>();
 }

@@ -42,4 +42,13 @@
     <data name="SPL_SPLNotFound" xml:space="preserve">
         <value>Stop point line correlation not found.</value>
     </data>
+    <data name="StopPoint_IdentifierEmpty" xml:space="preserve">
+        <value>Stop point identifier cannot be empty.</value>
+    </data>
+    <data name="StopPoint_NameEmpty" xml:space="preserve">
+        <value>Stop point name cannot be empty.</value>
+    </data>
+    <data name="StopPoint_LatLongEmpty" xml:space="preserve">
+        <value>If street name is not provided, lat and long should not be empty.</value>
+    </data>
 </root>
