@@ -19,11 +19,13 @@ public class ScheduleEntryDTOValidator : AbstractValidator<ScheduleEntryDTO>
             RuleFor(schedule => schedule.RecurringDays)
                 .NotEmpty()
                 .Must(days => days!.Split(',').All(day => int.Parse(day) < 7))
+                .WithMessage(ErrorMessages.Schedule_RecurringDaysEmpty)
                 .When(schedule => schedule.RecurringDays!.Contains(','));
 
             RuleFor(schedule => schedule.RecurringDays)
                 .NotEmpty()
                 .Must(days => int.Parse(days!) < 7)
+                .WithMessage(ErrorMessages.Schedule_RecurringDaysEmpty)
                 .When(schedule => schedule.RecurringDays!.Length == 1 && char.IsDigit(schedule.RecurringDays[0]));
         });
 
