@@ -1,17 +1,38 @@
+using Asp.Versioning;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using PublicTransportApi.Data;
 using PublicTransportApi.Services;
 using PublicTransportApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApiVersioning();
 builder.Services.AddControllers();
+builder.Services
+    .AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ReportApiVersions = true;
+    })
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("V1", new OpenApiInfo { Title = "Public Transport API", Version = "V1.0" });
+    options.ResolveConflictingActions(desc => desc.First());
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("datasource=database.sqlite"));
 builder.Services.AddScoped<ILineService, LineService>();
+builder.Services.AddScoped<IScheduleEntryService, ScheduleService>();
+builder.Services.AddScoped<IStopPointService, StopPointService>();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
@@ -20,7 +41,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/V1/swagger.json", "V1.0"); });
 }
 
 app.UseHttpsRedirection();

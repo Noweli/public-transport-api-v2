@@ -92,5 +92,29 @@ namespace PublicTransportApi.Resources {
                 return ResourceManager.GetString("SPL_SPLNotFound", resourceCulture);
             }
         }
+        
+        internal static string StopPoint_IdentifierEmpty {
+            get {
+                return ResourceManager.GetString("StopPoint_IdentifierEmpty", resourceCulture);
+            }
+        }
+        
+        internal static string StopPoint_NameEmpty {
+            get {
+                return ResourceManager.GetString("StopPoint_NameEmpty", resourceCulture);
+            }
+        }
+        
+        internal static string StopPoint_LatLongEmpty {
+            get {
+                return ResourceManager.GetString("StopPoint_LatLongEmpty", resourceCulture);
+            }
+        }
+        
+        internal static string StopPoint_NotFound {
+            get {
+                return ResourceManager.GetString("StopPoint_NotFound", resourceCulture);
+            }
+        }
     }
 }
