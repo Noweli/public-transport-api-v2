@@ -36,4 +36,10 @@
     <data name="Schedule_DateTimeEmpty" xml:space="preserve">
         <value>Date and time cannot be empty for schedule.</value>
     </data>
+    <data name="Schedule_ScheduleNotFound" xml:space="preserve">
+        <value>Schedule not found.</value>
+    </data>
+    <data name="SPL_SPLNotFound" xml:space="preserve">
+        <value>Stop point line correlation not found.</value>
+    </data>
 </root>

@@ -5,5 +5,5 @@ public class ScheduleEntryDTO
     public bool IsRecurring { get; set; }
     public string? RecurringDays { get; set; }
     public DateTime DateTime { get; set; }
-    public StopPointLineCorrelation? SPLCorrelation { get; set; }
+    public int? SPLCorrelationId { get; set; }
 }

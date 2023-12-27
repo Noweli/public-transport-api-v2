@@ -80,5 +80,17 @@ namespace PublicTransportApi.Resources {
                 return ResourceManager.GetString("Schedule_DateTimeEmpty", resourceCulture);
             }
         }
+        
+        internal static string Schedule_ScheduleNotFound {
+            get {
+                return ResourceManager.GetString("Schedule_ScheduleNotFound", resourceCulture);
+            }
+        }
+        
+        internal static string SPL_SPLNotFound {
+            get {
+                return ResourceManager.GetString("SPL_SPLNotFound", resourceCulture);
+            }
+        }
     }
 }
