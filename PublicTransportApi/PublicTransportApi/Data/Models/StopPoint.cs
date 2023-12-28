@@ -10,5 +10,5 @@ public class StopPoint
     [MaxLength(30)] public string? Identifier { get; set; }
     [MaxLength(120)] public string? Name { get; set; }
     [MaxLength(120)] public string? StreetName { get; set; }
-    public ICollection<StopPointLineCorrelation> SPLCorrelation { get; } = new List<StopPointLineCorrelation>();
+    public virtual ICollection<StopPointLineCorrelation> SPLCorrelation { get; } = new List<StopPointLineCorrelation>();
 }
