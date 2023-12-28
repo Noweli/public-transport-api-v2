@@ -2,7 +2,7 @@ using FluentValidation;
 using PublicTransportApi.Data.Models.DTOs;
 using PublicTransportApi.Resources;
 
-namespace PublicTransportApi.Validators;
+namespace PublicTransportApi.Data.Models.Validators;
 
 public class ScheduleEntryDTOValidator : AbstractValidator<ScheduleEntryDTO>
 {

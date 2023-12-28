@@ -2,9 +2,9 @@ using NUnit.Framework;
 using PublicTransportApi.Services;
 using PublicTransportApi.Services.Interfaces;
 using PublicTransportApi.Tests.TestHelpers;
-using PublicTransportApi.Validators;
 using FluentAssertions;
 using PublicTransportApi.Data;
+using PublicTransportApi.Data.Models.Validators;
 
 namespace PublicTransportApi.Tests.Services.Tests;
 
