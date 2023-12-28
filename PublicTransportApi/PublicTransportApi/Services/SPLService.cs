@@ -20,7 +20,11 @@ public class SPLService : ISPLService
     {
         try
         {
-            var result = await _applicationDbContext.StopPointLineCorrelations.ToListAsync();
+            var result = await _applicationDbContext.StopPointLineCorrelations
+                .Include(spl => spl.Line)
+                .Include(spl => spl.StopPoint)
+                .Include(spl => spl.ScheduleEntries)
+                .ToListAsync();
 
             return new Result<List<StopPointLineCorrelation>>
             {

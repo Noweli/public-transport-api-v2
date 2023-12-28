@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Asp.Versioning;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,11 @@ using PublicTransportApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 builder.Services
     .AddApiVersioning(options =>
     {
@@ -33,6 +38,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite
 builder.Services.AddScoped<ILineService, LineService>();
 builder.Services.AddScoped<IScheduleEntryService, ScheduleService>();
 builder.Services.AddScoped<IStopPointService, StopPointService>();
+builder.Services.AddScoped<ISPLService, SPLService>();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
