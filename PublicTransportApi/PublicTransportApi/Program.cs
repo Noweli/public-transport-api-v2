@@ -10,10 +10,7 @@ using PublicTransportApi.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    });
+    .AddJsonOptions(options => { options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; });
 builder.Services
     .AddApiVersioning(options =>
     {
@@ -34,12 +31,21 @@ builder.Services.AddSwaggerGen(options =>
     options.ResolveConflictingActions(desc => desc.First());
 });
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("datasource=database.sqlite"));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("LocalConnection")));
 builder.Services.AddScoped<ILineService, LineService>();
 builder.Services.AddScoped<IScheduleEntryService, ScheduleService>();
 builder.Services.AddScoped<IStopPointService, StopPointService>();
 builder.Services.AddScoped<ISPLService, SPLService>();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendCors", config =>
+        config.WithOrigins(builder.Configuration.GetSection("FrontEnd:Url").Value ?? "")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 
 var app = builder.Build();
 
@@ -48,6 +54,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/V1/swagger.json", "V1.0"); });
+    app.UseCors("FrontendCors");
 }
 
 app.UseHttpsRedirection();
