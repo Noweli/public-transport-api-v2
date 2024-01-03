@@ -43,6 +43,37 @@ public class StopPointService : IStopPointService
         }
     }
 
+    public async Task<Result<StopPoint>> GetStopPointById(int id)
+    {
+        try
+        {
+            var result = await _applicationDbContext.StopPoints.FindAsync(id);
+
+            if (result is null)
+            {
+                return new Result<StopPoint>
+                {
+                    IsSuccess = false,
+                    Message = ErrorMessages.StopPoint_NotFound
+                };
+            }
+
+            return new Result<StopPoint>
+            {
+                IsSuccess = true,
+                Data = result
+            };
+        }
+        catch (Exception)
+        {
+            return new Result<StopPoint>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+    }
+
     public async Task<Result<StopPoint>> AddStopPoint(StopPointDTO stopPointDTO)
     {
         var validationResult = await _dtoValidator.ValidateAsync(stopPointDTO);

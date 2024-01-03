@@ -32,6 +32,19 @@ public class StopPointController : ControllerBase
 
         return new OkObjectResult(serviceResult);
     }
+    
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Result<StopPoint>>> GetStopPointById(int id)
+    {
+        var serviceResult = await _stopPointService.GetStopPointById(id);
+
+        if (!serviceResult.IsSuccess)
+        {
+            return new BadRequestObjectResult(serviceResult);
+        }
+
+        return new OkObjectResult(serviceResult);
+    }
 
     [HttpPost]
     public async Task<ActionResult<Result<StopPoint>>> AddStopPoint([FromBody] StopPointDTO stopPointDTO)
@@ -47,7 +60,7 @@ public class StopPointController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<ActionResult<Result<List<StopPoint>>>> DeleteStopPoint([FromQuery] int id)
+    public async Task<ActionResult<Result>> DeleteStopPoint([FromQuery] int id)
     {
         var serviceResult = await _stopPointService.DeleteStopPoint(id);
 
