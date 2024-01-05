@@ -47,7 +47,7 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<ActionResult<Result<ScheduleEntry>>> RemoveSchedule([FromQuery] int id)
+    public async Task<ActionResult<Result>> RemoveSchedule([FromQuery] int id)
     {
         var serviceResult = await _scheduleService.RemoveSchedule(id);
 
