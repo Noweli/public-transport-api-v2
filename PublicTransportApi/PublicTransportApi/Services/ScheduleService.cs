@@ -91,6 +91,37 @@ public class ScheduleService : IScheduleEntryService
         }
     }
 
+    public async Task<Result<ScheduleEntry>> GetScheduleById(int id)
+    {
+        try
+        {
+            var result = await _applicationDbContext.ScheduleEntries.FindAsync(id);
+
+            if (result is null)
+            {
+                return new Result<ScheduleEntry>
+                {
+                    IsSuccess = false,
+                    Message = ErrorMessages.Schedule_ScheduleNotFound
+                };
+            }
+
+            return new Result<ScheduleEntry>()
+            {
+                IsSuccess = true,
+                Data = result
+            };
+        }
+        catch (Exception)
+        {
+            return new Result<ScheduleEntry>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+    }
+
     public async Task<Result> RemoveSchedule(int id)
     {
         try
