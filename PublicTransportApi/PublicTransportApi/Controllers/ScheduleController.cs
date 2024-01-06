@@ -32,6 +32,19 @@ public class ScheduleController : ControllerBase
 
         return new OkObjectResult(serviceResult);
     }
+    
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Result<ScheduleEntry>>> GetAllSchedules(int id)
+    {
+        var serviceResult = await _scheduleService.GetScheduleById(id);
+
+        if (!serviceResult.IsSuccess)
+        {
+            return new BadRequestObjectResult(serviceResult);
+        }
+
+        return new OkObjectResult(serviceResult);
+    }
 
     [HttpPost]
     public async Task<ActionResult<Result<ScheduleEntry>>> AddSchedule([FromBody] ScheduleEntryDTO scheduleEntryDTO)
