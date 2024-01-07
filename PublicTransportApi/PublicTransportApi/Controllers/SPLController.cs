@@ -32,6 +32,20 @@ public class SPLController : ControllerBase
 
         return BadRequest(result);
     }
+    
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Result<StopPointLineCorrelation>>> GetSplById(int id)
+    {
+        var result = await _splService.GetSPLById(id);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result);
+    }
+
 
     [HttpPost]
     public async Task<ActionResult<Result<StopPointLineCorrelation>>> AddSPL([FromBody] SPLDTO splDto)
