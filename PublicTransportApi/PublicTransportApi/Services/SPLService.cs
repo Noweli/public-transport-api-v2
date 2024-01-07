@@ -42,6 +42,41 @@ public class SPLService : ISPLService
         }
     }
 
+    public async Task<Result<StopPointLineCorrelation>> GetSPLById(int id)
+    {
+        try
+        {
+            var result = await _applicationDbContext.StopPointLineCorrelations
+                .Include(spl => spl.Line)
+                .Include(spl => spl.StopPoint)
+                .Include(spl => spl.ScheduleEntries)
+                .FirstOrDefaultAsync(spl => spl.Id.Equals(id));
+
+            if (result is null)
+            {
+                return new Result<StopPointLineCorrelation>
+                {
+                    IsSuccess = false,
+                    Message = ErrorMessages.SPL_SPLNotFound
+                };
+            }
+            
+            return new Result<StopPointLineCorrelation>
+            {
+                IsSuccess = true,
+                Data = result
+            };
+        }
+        catch (Exception)
+        {
+            return new Result<StopPointLineCorrelation>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+    }
+
     public async Task<Result<StopPointLineCorrelation>> AddSPL(SPLDTO splDto)
     {
         try
