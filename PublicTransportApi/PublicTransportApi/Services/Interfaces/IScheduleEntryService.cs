@@ -6,6 +6,7 @@ namespace PublicTransportApi.Services.Interfaces;
 public interface IScheduleEntryService
 {
     Task<Result<ScheduleEntry>> AddSchedule(ScheduleEntryDTO scheduleEntryDTO);
+    Task<Result<ScheduleEntry>> AttachToSPL(int scheduleId, int splId);
     Task<Result<List<ScheduleEntry>>> GetAllSchedules();
     Task<Result<ScheduleEntry>> GetScheduleById(int id);
     Task<Result> RemoveSchedule(int id);
