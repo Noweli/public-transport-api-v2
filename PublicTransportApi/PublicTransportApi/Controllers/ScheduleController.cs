@@ -85,4 +85,17 @@ public class ScheduleController : ControllerBase
 
         return new OkObjectResult(serviceResult);
     }
+    
+    [HttpPatch("{scheduleId:int}")]
+    public async Task<ActionResult<Result<ScheduleEntry>>> UpdateSchedule(int scheduleId, [FromQuery] int splId)
+    {
+        var serviceResult = await _scheduleService.AttachToSPL(scheduleId, splId);
+
+        if (!serviceResult.IsSuccess)
+        {
+            return new BadRequestObjectResult(serviceResult);
+        }
+
+        return new OkObjectResult(serviceResult);
+    }
 }

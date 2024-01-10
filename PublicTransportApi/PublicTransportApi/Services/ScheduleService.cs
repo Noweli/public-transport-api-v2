@@ -49,14 +49,59 @@ public class ScheduleService : IScheduleEntryService
                     Message = attachSpl.Message
                 };
             }
-            
+
             var addedEntity = await _applicationDbContext.AddAsync(scheduleToAdd);
             _ = await _applicationDbContext.SaveChangesAsync();
-            
+
             return new Result<ScheduleEntry>
             {
                 IsSuccess = true,
                 Data = addedEntity.Entity
+            };
+        }
+        catch (Exception)
+        {
+            return new Result<ScheduleEntry>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+    }
+
+    public async Task<Result<ScheduleEntry>> AttachToSPL(int scheduleId, int splId)
+    {
+        try
+        {
+            var schedule = await _applicationDbContext.ScheduleEntries.FindAsync(scheduleId);
+
+            if (schedule is null)
+            {
+                return new Result<ScheduleEntry>
+                {
+                    IsSuccess = false,
+                    Message = ErrorMessages.Schedule_ScheduleNotFound
+                };
+            }
+
+            var spl = await _applicationDbContext.StopPointLineCorrelations.FindAsync(splId);
+
+            if (spl is null)
+            {
+                return new Result<ScheduleEntry>
+                {
+                    IsSuccess = false,
+                    Message = ErrorMessages.SPL_SPLNotFound
+                };
+            }
+
+            schedule.SPLCorrelation = spl;
+            _ = await _applicationDbContext.SaveChangesAsync();
+
+            return new Result<ScheduleEntry>
+            {
+                IsSuccess = true,
+                Data = schedule
             };
         }
         catch (Exception)
@@ -95,7 +140,9 @@ public class ScheduleService : IScheduleEntryService
     {
         try
         {
-            var result = await _applicationDbContext.ScheduleEntries.FindAsync(id);
+            var result = await _applicationDbContext.ScheduleEntries
+                .Include(schedule => schedule.SPLCorrelation)
+                .FirstOrDefaultAsync(schedule => schedule.Id.Equals(id));
 
             if (result is null)
             {
@@ -179,9 +226,9 @@ public class ScheduleService : IScheduleEntryService
                     Message = updateEntityResult.Message
                 };
             }
-            
+
             await _applicationDbContext.SaveChangesAsync();
-            
+
             return new Result<ScheduleEntry>
             {
                 IsSuccess = true,
