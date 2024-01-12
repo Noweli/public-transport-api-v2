@@ -87,7 +87,7 @@ public class SPLService : ISPLService
                 .SelectMany(spl => spl.ScheduleEntries)
                 .ToListAsync();
 
-            var scheduleTimes = schedules.OrderDescending()
+            var scheduleTimes = schedules.OrderByDescending(schedule => schedule.DateTime)
                 .Take(5)
                 .Select(schedule => schedule.DateTime.ToString("t"))
                 .ToList();
