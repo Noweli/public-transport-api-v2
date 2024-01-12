@@ -153,7 +153,7 @@ public class ScheduleService : IScheduleEntryService
                 };
             }
 
-            return new Result<ScheduleEntry>()
+            return new Result<ScheduleEntry>
             {
                 IsSuccess = true,
                 Data = result

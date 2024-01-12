@@ -60,7 +60,7 @@ public class SPLService : ISPLService
                     Message = ErrorMessages.SPL_SPLNotFound
                 };
             }
-            
+
             return new Result<StopPointLineCorrelation>
             {
                 IsSuccess = true,
@@ -70,6 +70,37 @@ public class SPLService : ISPLService
         catch (Exception)
         {
             return new Result<StopPointLineCorrelation>
+            {
+                IsSuccess = false,
+                Message = ErrorMessages.Generic_ExceptionOccured
+            };
+        }
+    }
+
+    public async Task<Result<List<string>>> GetNearestDeparturesTime(int lineId)
+    {
+        try
+        {
+            var schedules = await _applicationDbContext.StopPointLineCorrelations
+                .Include(spl => spl.ScheduleEntries)
+                .Where(spl => spl.Line != null && spl.Line.Id.Equals(lineId))
+                .SelectMany(spl => spl.ScheduleEntries)
+                .ToListAsync();
+
+            var scheduleTimes = schedules.OrderDescending()
+                .Take(5)
+                .Select(schedule => schedule.DateTime.ToString("t"))
+                .ToList();
+
+            return new Result<List<string>>
+            {
+                IsSuccess = true,
+                Data = scheduleTimes
+            };
+        }
+        catch (Exception)
+        {
+            return new Result<List<string>>
             {
                 IsSuccess = false,
                 Message = ErrorMessages.Generic_ExceptionOccured
