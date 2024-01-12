@@ -46,6 +46,19 @@ public class SPLController : ControllerBase
         return BadRequest(result);
     }
 
+    [HttpGet("nearestDeparture/{lineId:int}")]
+    public async Task<ActionResult<Result<List<string>>>> GetNearestDeparture(int lineId)
+    {
+        var result = await _splService.GetNearestDeparturesTime(lineId);
+
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+
+        return BadRequest(result);
+    }
+
 
     [HttpPost]
     public async Task<ActionResult<Result<StopPointLineCorrelation>>> AddSPL([FromBody] SPLDTO splDto)
